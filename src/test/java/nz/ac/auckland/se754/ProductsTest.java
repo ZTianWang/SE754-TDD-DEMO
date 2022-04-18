@@ -9,6 +9,10 @@ package nz.ac.auckland.se754;
 * Genre
 */
 
+import nz.ac.auckland.se754.demo.controller.ProductController;
+import nz.ac.auckland.se754.demo.dao.ProductDao;
+import nz.ac.auckland.se754.demo.dao.daoImpl.ProductDaoImpl;
+import nz.ac.auckland.se754.demo.entity.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +24,8 @@ import java.util.List;
 
 public class ProductsTest {
 
-    @Mock
-    ProductDao productDao;
+//    @Mock
+//    ProductDao productDao = new ProductDaoImpl();
 
     @Mock
     Product product;
@@ -46,10 +50,12 @@ public class ProductsTest {
 
     @Test
     public void when_searchAKeyword_thenReturnProductsList(){
+        ProductDao productDao = new ProductDaoImpl();
         Mockito.when(productDao.searchByKeywords("Maori")).thenReturn(productList);
         ProductController productController = new ProductController();
-        List<product> products = productController.searchProductsByKeywords("Maori");
+        List<Product> products = productController.searchProductsByKeywords("Maori");
         Assertions.assertEquals(2,products.size());
+        Assertions.assertTrue(productDao instanceof ProductDaoImpl);
         Mockito.verify(productDao,Mockito.times(1)).searchByKeywords(Mockito.anyString());
     }
 }
