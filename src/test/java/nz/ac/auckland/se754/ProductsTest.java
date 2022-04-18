@@ -18,19 +18,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.internal.verification.Times;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsTest {
 
 //    @Mock
-//    ProductDao productDao = new ProductDaoImpl();
+//    ProductDaoImpl productDao;
 
+//    @Mock
+//    Product product;
     @Mock
-    Product product;
+    ProductController productController;
 
-    List<Product> productList;
+    List<Product> productList = new ArrayList<Product>();
+
+    @BeforeEach
+    public void setUp(){
+        MockitoAnnotations.openMocks(this);
+    }
 
     @BeforeEach
     public void getAProductsList(){
@@ -50,12 +59,14 @@ public class ProductsTest {
 
     @Test
     public void when_searchAKeyword_thenReturnProductsList(){
-        ProductDao productDao = new ProductDaoImpl();
-        Mockito.when(productDao.searchByKeywords("Maori")).thenReturn(productList);
-        ProductController productController = new ProductController();
+
+//        ProductDao productDao = Mockito.mock(ProductDao.class);
+//        Mockito.when(productDao.searchByKeywords("Maori")).thenReturn(productList);
+//        Assertions.assertTrue(productDao instanceof ProductDaoImpl);
+//        ProductController productController = Mockito.mock(ProductController.class);
+        Mockito.when(productController.searchProductsByKeywords("Maori")).thenReturn(productList);
         List<Product> products = productController.searchProductsByKeywords("Maori");
         Assertions.assertEquals(2,products.size());
-        Assertions.assertTrue(productDao instanceof ProductDaoImpl);
-        Mockito.verify(productDao,Mockito.times(1)).searchByKeywords(Mockito.anyString());
+        Mockito.verify(productController,Mockito.times(1)).searchProductsByKeywords(Mockito.anyString());
     }
 }

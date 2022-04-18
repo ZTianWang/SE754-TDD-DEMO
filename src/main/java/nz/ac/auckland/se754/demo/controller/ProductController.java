@@ -8,7 +8,8 @@ import java.util.List;
 
 public class ProductController {
 
+    private ProductDao productDao = new ProductDaoImpl();
     public List<Product> searchProductsByKeywords(String keywords){
-        return null;
+        return productDao.searchByKeywords(keywords);
     }
 }
