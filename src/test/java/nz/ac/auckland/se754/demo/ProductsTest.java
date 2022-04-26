@@ -1,4 +1,4 @@
-package nz.ac.auckland.se754;
+package nz.ac.auckland.se754.demo;
 
 /*
 * Within the search bar, the user is able to type any key words they want relating to the type of prodcut/s they want to find.
@@ -9,9 +9,7 @@ package nz.ac.auckland.se754;
 * Genre
 */
 
-import nz.ac.auckland.se754.demo.controller.ProductController;
-import nz.ac.auckland.se754.demo.dao.ProductDao;
-import nz.ac.auckland.se754.demo.dao.daoImpl.ProductDaoImpl;
+import nz.ac.auckland.se754.demo.server.ProductServer;
 import nz.ac.auckland.se754.demo.entity.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,20 +17,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.verification.Times;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsTest {
 
-//    @Mock
-//    ProductDaoImpl productDao;
-
-//    @Mock
-//    Product product;
     @Mock
-    ProductController productController;
+ProductServer productServer;
 
     List<Product> productList = new ArrayList<Product>();
 
@@ -60,13 +52,9 @@ public class ProductsTest {
     @Test
     public void when_searchAKeyword_thenReturnProductsList(){
 
-//        ProductDao productDao = Mockito.mock(ProductDao.class);
-//        Mockito.when(productDao.searchByKeywords("Maori")).thenReturn(productList);
-//        Assertions.assertTrue(productDao instanceof ProductDaoImpl);
-//        ProductController productController = Mockito.mock(ProductController.class);
-        Mockito.when(productController.searchProductsByKeywords("Maori")).thenReturn(productList);
-        List<Product> products = productController.searchProductsByKeywords("Maori");
+        Mockito.when(productServer.searchProductsByKeywords("Maori")).thenReturn(productList);
+        List<Product> products = productServer.searchProductsByKeywords("Maori");
         Assertions.assertEquals(2,products.size());
-        Mockito.verify(productController,Mockito.times(1)).searchProductsByKeywords(Mockito.anyString());
+        Mockito.verify(productServer,Mockito.times(1)).searchProductsByKeywords(Mockito.anyString());
     }
 }
